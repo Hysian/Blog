@@ -1,0 +1,38 @@
+	body{
+		width: 100%;
+		color: #000000;
+	}
+	#head{
+		background-color: #000000;
+		color: #ffffff;
+		padding-top: 20px;
+		padding-bottom:20px;
+	}
+	div#head h1{
+		width: 100px;
+		margin: 0 auto;
+	}
+	a{
+		text-decoration:none;
+		color: #AAAAAA;
+	}
+	span{
+		margin: 5px 10px;
+		float: right;
+		color: #6B6969;
+	}
+	.wrap{
+		width: 980px;
+		height: 800px;
+		margin: 0 auto;
+	}
+	.left{
+		width: 70%;
+		float: left;
+	}
+	.right{
+		width: 30%;
+		float: left;
+		height: 800px;
+		text-align: center;
+	}
