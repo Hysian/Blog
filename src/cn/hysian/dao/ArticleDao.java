@@ -1,7 +1,10 @@
 package cn.hysian.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,53 +12,88 @@ import cn.hysian.bean.ArticleBean;
 import cn.hysian.utils.JDBCutil;
 
 public class ArticleDao {
-	private JDBCutil connection = null;
+	private Connection conn = null;
 	private ArticleBean articlebean = null;
+	private PreparedStatement ps = null;
 	String sql = null;
 	
 	public ArticleDao(){
-		connection = new JDBCutil();
+		conn = JDBCutil.getConnection();
 	}
 	
-	public boolean upArticle(String operation, ArticleBean form){
-		boolean flag = false;
+	/**
+	 * 增加或修改文章
+	 * @param operation
+	 * @param form
+	 * @return
+	 */
+	public int upArticle(String operation, ArticleBean form){
+		
+//		boolean flag = false;
+		int i = 0;
 		
 		switch(operation){
-			case "add": sql = "INSERT article(title,content,upTime,number) VALUES('"+form.getTitle()+
-					"','"+form.getContent()+"','"+form.getUpTime()+"','"+0+"')";
-		break;
-			
+			case "add": sql = "INSERT article(title,content,upTime,number) VALUES(?,?,?,'"+1+"')";
+		break;		
 			case "update": sql = "UPDATE article SET title='"+form.getTitle()+"',content='"+
 					form.getContent()+"'";
 		break;
-
 		}
-		if(connection.exeUpdate(sql)){
-			flag = true;
+		
+		try{
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, form.getTitle());
+			ps.setString(2, form.getContent());
+			ps.setString(3, form.getUpTime());
+			i = ps.executeUpdate();
 		}
-		return flag;
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			JDBCutil.free(null, ps, conn); 
+		}
+		System.out.println(i);
+		return i;
 	}
 	
-	public boolean exeArticle(String operation, int id){
-		boolean flag = false;
-				
+	/**
+	 * 删除或记录阅读数
+	 * @param operation
+	 * @param id
+	 * @return
+	 */
+	public int exeArticle(String operation, int id){
+		int i = 0;			
 		switch(operation){
-			case "delete": sql = "DELETE FROM article WHERE id = '"+id+"'";
+			case "delete": sql = "DELETE FROM article WHERE id =?";
 		break;
-			case "count": sql = "UPDATE article SET number=number+1 WHERE id ='"+id+"'";
+			case "count": sql = "UPDATE article SET number=number+1 WHERE id =?";
 		break;
 		}
-		if(connection.exeUpdate(sql)){
-			flag = true;
+		try{
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			JDBCutil.free(null, ps, conn); 
 		}
-		return flag;
+		System.out.println(id);
+		System.out.println(sql);
+		System.out.println(i);
+		return i;
+		
+		
 	}
 	
 	public List ArticleList(){
 		List list = new ArrayList();
 		sql = "SELECT * FROM article";
-		ResultSet rs = connection.exeQuery(sql);
 		try{
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				articlebean = new ArticleBean();
 				articlebean.setId(rs.getInt(1));
@@ -73,9 +111,11 @@ public class ArticleDao {
 	}
 	
 	public ArticleBean queArticle(int id){
-		sql = "SELECT * FROM ARTICLE WHERE id = '"+id+"'";
-		ResultSet rs = connection.exeQuery(sql);
+		sql = "SELECT * FROM ARTICLE WHERE id =?";
 		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				articlebean = new ArticleBean();
 				articlebean.setId(rs.getInt(1));
@@ -87,15 +127,8 @@ public class ArticleDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.exeArticle("count",articlebean.getId());//查询+1
+		this.exeArticle("count", articlebean.getId());//查询+1
 		return articlebean;
 	}
-//	public static void main(String args[]){
-//		
-//		ArticleDao p = new ArticleDao();
-//		List list = p.ArticleList();
-//		for(int i = 0; i<list.size(); i++){
-//			System.out.println(list.get(i));
-//		}
-//	}
+
 }

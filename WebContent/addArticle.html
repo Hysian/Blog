@@ -47,7 +47,7 @@ function compile(){
 
 function post(){
 	var title = encodeURIComponent(encodeURI(document.getElementById("tit").value));
-	var content = encodeURIComponent(encodeURI(document.getElementById("content").value));
+	var content = encodeURIComponent(encodeURI(compile()));
 	var data = "title="+title+"&content="+content;
 	var xmlhttp=new XMLHttpRequest();
 	xmlhttp.open("post","article",true);

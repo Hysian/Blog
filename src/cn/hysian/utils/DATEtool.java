@@ -1,4 +1,4 @@
-package cn.hysian.tool;
+package cn.hysian.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

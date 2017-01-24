@@ -1,37 +1,114 @@
-	body{
-		width: 100%;
-		color: #000000;
+	*{margin: 0;padding: 0;}
+	.wrap{
+		margin: 0 auto;
+		width:55%;
 	}
-	#head{
-		background-color: #000000;
-		color: #ffffff;
-		padding-top: 20px;
-		padding-bottom:20px;
-	}
-	div#head h1{
-		width: 100px;
+	.body{
+		color: black;
+		line-height: 1.625;
+		font-size: 18px;
 		margin: 0 auto;
 	}
+
+
+	#header{
+		width:100%; 
+		height:20px;
+		background-color:black;
+		padding: 40px 0px;
+	}
+	#header div{
+		width:200px;
+		margin: 0 auto;
+
+	}
+	#name{
+		margin-top: -20px;
+		text-align: center;
+	}
+	#name a{
+		text-decoration: none;
+		color: #FFF;
+
+	}
+
+	#nav{
+		background: #eee;
+		text-align: center;
+		margin: 0 auto;
+	}
+	#list{
+		height: 30px;
+		width: 300px;
+		margin: 0 auto;
+		text-align: center;
+	}
+	#list ul{
+		list-style: none;
+	}
+	div ul li{
+		float: left;
+		line-height: 30px;
+		text-align: center;
+		position: relative;
+	}
+	li a{
+		text-decoration: none;
+		display: block;
+		padding: 0 10px;
+		color: #000;
+		height: 30px;
+		width: 50px;
+		font-family: Arial;
+	}
+	li a:hover{
+		color: #FFF;
+		background-color: #666;
+	}
+	ul li ul{
+		position: absolute;
+		left: 0;
+		top: 30px;
+		display: none;
+	}
+	ul li:hover ul{
+		display: block;
+	}
+	ul li ul li{
+		float: none;
+	}
+	
+	#title{
+		float:left;
+		clear:both;
+		margin-top:30px;
+	}
+	
 	a{
 		text-decoration:none;
-		color: #AAAAAA;
+		color: #000;
 	}
 	span{
 		margin: 5px 10px;
 		float: right;
 		color: #6B6969;
 	}
-	.wrap{
-		width: 980px;
-		height: 800px;
-		margin: 0 auto;
+	
+	#x_line{
+		margin:10px 0;
+		height: 2px;
+    	border-top: 1px solid #ddd;
+    	text-align: center;
+    	clear:both;  	
 	}
+	
 	.left{
-		width: 70%;
-		float: left;
+		width:80%;
+		float:left;
 	}
+
 	.right{
-		width: 30%;
+		width: 20%;
 		float: left;
 		height: 800px;
 		text-align: center;
