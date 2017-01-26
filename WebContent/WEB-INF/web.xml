@@ -11,4 +11,22 @@
     <servlet-name>ArticleServlet</servlet-name>
     <url-pattern>/article</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>cn.hysian.servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  
+  
+  	<filter>  
+	    <filter-name>LoginFilter</filter-name>  
+	    <filter-class>cn.hysian.filter.LoginFilter</filter-class>    
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>LoginFilter</filter-name>  
+	    <url-pattern>/admin.jsp</url-pattern>  
+	</filter-mapping> 
 </web-app>

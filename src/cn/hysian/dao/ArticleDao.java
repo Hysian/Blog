@@ -64,7 +64,7 @@ public class ArticleDao {
 	 * @return
 	 */
 	public int exeArticle(String operation, int id){
-		int i = 0;			
+		int flag = 0;			
 		switch(operation){
 			case "delete": sql = "DELETE FROM article WHERE id =?";
 		break;
@@ -74,16 +74,14 @@ public class ArticleDao {
 		try{
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
-			ps.execute();
+			flag = ps.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
 			JDBCutil.free(null, ps, conn); 
 		}
-		System.out.println(id);
-		System.out.println(sql);
-		System.out.println(i);
-		return i;
+		System.out.println(flag);
+		return flag;
 		
 		
 	}
