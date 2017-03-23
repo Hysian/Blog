@@ -1,6 +1,6 @@
-package cn.hysian.bean;
+package cn.hysian.pojo;
 
-public class ArticleBean {
+public class Article {
 	private int id;
 	private String title;
 	private String content;
