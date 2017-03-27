@@ -25,49 +25,32 @@ public class LoginFilter implements Filter {
      * Default constructor. 
      */
     public LoginFilter() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
-
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request1 = (HttpServletRequest)request;  
-        HttpServletResponse response1 = (HttpServletResponse)response;  
-//        HttpSession session = request.getSession();
-        Cookie[] cookies = null;
-        Cookie c = null;
-        cookies = request1.getCookies();
-        HttpSession session = request1.getSession();
-//      System.out.println(cookies);
-        if(cookies.length > 1){
-	        c = cookies[1];
-        	if(c.getName().equals("id")){
-        		chain.doFilter(request1, response1);
-        	}else{
-        		response1.setCharacterEncoding("utf-8");  
-        		PrintWriter out = response1.getWriter();  
-        		out.print("<script>alert('您还没有登录，请登录...'); window.location='login.html' </script>");
-        	}
-        }else{
-    		response1.setCharacterEncoding("utf-8");  
-    		PrintWriter out = response1.getWriter();  
+		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse res = (HttpServletResponse)response;
+        HttpSession session = req.getSession();
+        if(null == session.getAttribute("LoginUser")){
+        	res.setCharacterEncoding("utf-8");  
+    		PrintWriter out = res.getWriter();  
     		out.print("<script>alert('您还没有登录，请登录...'); window.location='login.html' </script>");
-    	}
+        } else {
+        	chain.doFilter(req, res);
+        }
 	}
-
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }
